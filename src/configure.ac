@@ -74,7 +74,7 @@ AC_SEARCH_LIBS([crypt], [crypt], [], [
 
 dnl
 AC_CHECK_HEADERS(pty.h util.h libutil.h)
-AC_SEARCH_LIBS([openpty], [util openpty], [
+AC_SEARCH_LIBS([openpty], [util openpty bsd], [
 	AC_DEFINE(HAVE_OPENPTY)
 ], [
 	AC_MSG_ERROR([unable to find openpty() function])
@@ -194,6 +194,10 @@ AC_DEFINE_UNQUOTED(PTY_MODE, $with_pty_mode)
 
 dnl -- with_pty_group
 AC_DEFINE_UNQUOTED(PTY_GROUP, $with_pty_group)
+
+AC_SEARCH_LIBS(socket, network)
+
+AC_CHECK_LIB(bsd, getpass)
 
 dnl -- with_pty_rofs
 AS_IF([test "x$with_pty_rofs" == "xyes"], [
