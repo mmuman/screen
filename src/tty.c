@@ -867,8 +867,10 @@ int TtyGrabConsole(int fd, bool on, char *rc_name)
 	InitTTY(&new1, 0);
 	SetMode(&new1, &new2, 0, 0);
 	SetTTY(consredirfd[1], &new2);
+#ifdef TIOCCONS
 	if (UserContext() == 1)
 		UserReturn(ioctl(consredirfd[1], TIOCCONS, (char *)&on));
+#endif
 	if (UserStatus()) {
 		Msg(errno, "%s: ioctl TIOCCONS failed", rc_name);
 		close(consredirfd[0]);
